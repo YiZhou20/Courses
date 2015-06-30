@@ -1,0 +1,106 @@
+Review:
+1. What are data? Meta data?
+2. R skill development
+	script + reproducability
+	open source
+function
+vectors <- data frame, ordered vectors
+subsetting, assignment vector[]
+creating vectors:
+	c()
+	seq()
+	rep()
+	sort()
+	order()
+lists: grouped vectors of different lengths list[[2]]
+matrices:
+	as.matrix
+	matrix(...) // mathematical operations, linear algebra
+	dim()
+	nrow()
+	ncol()
+	rownames()
+	colnames()
+	rbind(m1,m2) // row-wise concatenate
+	cbind(m1,m2) // column-wise
+3. reading data into R:
+	read.table() // column structure
+	read.csv() // comma delimited
+	scan()
+	readLines()
+	read.fwf() // fixed width
+	htmlParse()
+	xmlParse()
+4. graphics
+	par()
+	doc.save()
+	hist()
+	dotchart()
+	mosaicplot()
+	barplot()
+	table()
+	plot(x,y,type = "", ...)
+evaluating graphics:
+	characteristics of distribution
+	symmetric, multimodal, outliers
+* make interpretation easy:
+	color choice
+	display data
+	labeling
+	legend
+	caption
+	abline
+	lines()
+	text()
+	brewer's palette -qualitative, -diverging, -sequential
+5. data operations: apply, sapply, lapply, tapply
+	apply(data, 2, function, na.rm = TRUE, ... ) -- matrix
+	sapply, lapply -- data.frames, lists
+	tapply -- tables/vectors
+6. writing function: internal, be ware of overriding
+	myfunction = function(inputs, pars)
+		{ ...
+		  return()	} # use comments/instructions -call/usage, -inputs,pars, -outputs, -purpose, [-associated functions]
+	'orphan functions' <- no name, used in apply
+	flow control -if, -for, -while
+	# having some outputs to keep track of infinite loops
+
+Simulation: way of carrying out experiments
+	define experiment: sample size, distribution, pars, statistic of interest
+	write function to implement
+	what inputs vary? repeat the experiment B times, vary inputs systematically
+	get B samples of statistic of interest
+	for each combination of inputs, summarize distribution of statistics
+	present summary/ [plots]
+random number generator
+	rnorm(), runif()
+	pseudo, seed, set.seed()
+
+Regular expressions
+	substring(pattern, data)
+	nchar()
+	strsplit()
+	sub(from, to, data)
+	gsub(from, to, data) -- globally
+^ <- start
+.*
+[A-Z]
+[Tt]his
+[^ ] <- not
+[-+][A-Z]
+match on classes [:alpha:] digits/alnum/lower/upper/punct/blank
+grep(pattern, data) <- return indices *different from UNIX
+regexp(pattern, data) <- return starting positions
+g
++ preceeding element can be matched one or more times (repeats)
+. wild (characters)
+|< begins word
+|> end word
+{n} match n times
+{n,m} match n to m times
+\ 'meta characters'
+\\ . ^ $ + ? () [] {} / \
+
+xml syntax / tree
+html syntax / tree
+colors

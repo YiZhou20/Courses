@@ -1,0 +1,44 @@
+# Yi Zhou
+
+Step 1:
+mkdir Stat133XMLProject
+cd Stat133XMLProject
+
+Step 2:
+wget http://www.senate.gov/legislative/LIS/roll_call_votes/vote1131/vote_113_1_00196.xml
+wc -l vote_113_1_00196.xml
+wc -m vote_113_1_00196.xml
+cut -d'>' -f1 vote_113_1_00196.xml > vote_113_1_00196.txt
+sort vote_113_1_00196.txt | uniq > vote_113_1_00196c.txt
+wc -l vote_113_1_00196c.txt
+# this gives 48, but note there are closing tags that need to be subtracted
+# considering there shouldn't be too many (since total is just 48)
+# and the file is sorted so all </ tags are at the beginning
+cat vote_113_1_00196c.txt
+# the first several lines starting with </ count as 8
+# thus giving the number of fields 40
+
+Step 3:
+grep "<last_name>" vote_113_1_00196.xml | cut -d'>' -f2 | cut -d'<' -f1 > MemberLastNames.txt
+wc -l MemberLastNames.txt
+# 100
+uniq MemberLastNames.txt | wc -l
+# 98
+grep "<first_name>" vote_113_1_00196.xml | cut -d'>' -f2 | cut -d '<' -f1 > MemberFirstNames.txt
+paste MemberFirstNames.txt MemberLastNames.txt > MemberFirstLastNames.txt
+paste -d',' MemberFirstNames.txt MemberLastNames.txt > MemberFirstLastNamesComma.txt
+
+grep "<party>" vote_113_1_00196.xml | cut -d'>' -f2 | cut -d '<' -f1 > party.txt
+grep "<state>" vote_113_1_00196.xml | cut -d'>' -f2 | cut -d '<' -f1 > state.txt
+paste MemberFirstLastNames.txt party.txt state.txt > Voting.txt
+sort party.txt | uniq -c
+# 52 Democrats
+# 46 Republicans
+# 2 Independent
+
+Step 4:
+pico Stat133XMLProject.sh
+# paste the above scripts
+# save and exit
+chmod 755 Stat133XMLProject.sh
+./Stat133XMLProject.sh

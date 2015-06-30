@@ -1,0 +1,1083 @@
+asb_stel$V3[stel$V1==1 & stel$V2==1]
+
+> depdpi_dep.dpi[dep.dpiV1==1,]
+
+or the better way:
+
+> magis.dpi_magis[dpi==1]
+
+#create dummy variables form a vector:
+
+x <- c(2,2,5,6,5,NA)
+xf <- factor(x,level = 2.6)
+
+
+family$age[family$bmi>25 & family$height ==70]
+
+conditional subsetting
+
+
+mean(fweight[fgender=="f"])==mean(fweight[fgender!="f"])
+
+
+new.var=c(fage,8,12,1,6)
+
+rep(x,2,each=2)
+
+x=order(fage)
+
+fage[x[2]]
+
+
+=================
+
+Tuesday
+Evans344
+
+
+dim(family)[1]
+dim.family=dim(family)
+dim.family[2]
+
+family[10:13,1:2]
+
+load()
+
+?read.table
+read.table()
+read.csv()
+read.table(...,sep='',..)
+na.strings=''
+
+CAquakes$Date
+
+=======================
+Thursday 6/20
+
+Midterm July 12 in class
+Final August 16 last class (3hrs)
+
+John Tukey (boxplot)
+
+plot(table(infants$parity),type="h",lwd=4)
+lwd=line width
+
+data=read.table("CO2Na9ons.txt",header=TRUE,sep="\t")
+
+names(table(video$grade))
+table(video$grade)[]
+barplot(x$table.video.grade)
+
+data=read.table("foursnps.txt")
+
+data=read.table(url("http://www.stanford.edu/~vcs/stat133/foursnps.txt"))
+table(data$V3)
+table(data$V4)
+table(data$V5)
+table(data$V6)
+levels(data$V3)
+
+length(data$V3[[2]]==-1)
+
+================
+Fri 6/21
+
+Stem & Leaf plot (Tukey) <--numerical data
+
+slide p.53
+title
+colors
+transform data
+x axis
+add source
+re...(?) grid
+reformat axis labels (fix font)
+axis labels
+read.table("chip04.txt",header=TRUE)
+
+slide p.59
+plot(x,y)
+abline(regoutput)  
+
+slide p.69
+jitter(data)
+
+
+=========================================
+Mon (6/24)
+
+p.51
+Best Practices for R plotting
+1. one script per figure
+   e.g. fig1.R  <====== data=read.table(...)
+                        plot(log(data$x),log(data$y))
+        fig2.R
+
+p.60 (start from this slide)
+lty ==> line type
+
+p.66
+no scientific reason to change the scale of x-axis
+1-3-5-7-12-15!
+
+p.69
+data=read.table(...)
+x.j=jitter(data$x)
+y.j=jitter(data$y)
+plot(x.j,y.j...)
+cex
+
+p.70
+drawback: choosing the scale of the axis to fill data region
+(see next slide)
+
+p.75
+d1 <- density(rnorm(100))
+d2 <- density(rnorm(100))
+plot(range(d1$x, d2$x), range(d1$y, d2$y), type = "n", xlab = "x",ylab = "Density")
+lines(d1, col = "red")
+lines(d2, col = "blue")
+
+stop at slide p.79
+
+
+
+Tue(6/25)
+start p.79
+
+abline
+
+p.87
+the third graph is better
+
+R- open source
+ - people can contribute "package"
+
+simply statistics (Colors in R)
+
+end p.109
+
+
+
+Wednesday(6/26)
+p.44 boxplot (replication)
+load("D:/Summer 2013/Stat 133 2013/SFHousing.rda")
+housing$city[1:28]
+
+someCities = c("Albany", "Berkeley", "El Cerrito", "Emeryville", 
+"Piedmont", "Richmond", "Lafayette", "Walnut Creek", "Kensington",
+"Alameda", "Orinda", "Moraga")
+shousing = housing[housing$city %in% someCities &housing$price < 2000000,]
+boxplot(shousing$price ~ shousing$city,las = 2)
+
+solutions:
+option 1: rewrite the boxplot function to drop unused levels as default
+boxplot2 <-
+function (formula, data = NULL, ...,
+           subset, na.action = NULL,
+           drop.unused.levels = TRUE)
+{
+     if (missing(formula) || (length(formula) != 3))
+         stop("'formula' missing or incorrect")
+     m <- match.call(expand.dots = FALSE)
+     if (is.matrix(eval(m$data, parent.frame())))
+         m$data <- as.data.frame(data)
+     m$... <- NULL
+     m$na.action <- na.action
+     m$drop.unused.levels <- drop.unused.levels
+     m[[1]] <- as.name("model.frame")
+     mf <- eval(m, parent.frame())
+     response <- attr(attr(mf, "terms"), "response")
+     boxplot(split(mf[[response]], mf[-response]), ...)
+}
+boxplot2(shousing$price ~ shousing$city,las = 2)
+oind=order(as.numeric(by(shousing$price, shousing$city, median))) 
+shousing$city=ordered(shousing$city, levels=levels(shousing$city)[oind]) 
+boxplot2(shousing$price ~ shousing$city,las = 2)
+#key words: Boxplot using Formula
+
+option 2:
+cityname=levels(shousing$city)
+scity=cityname[as.numeric(shousing$city)]
+boxplot(shousing$price ~ scity,las = 2)
+
+### or we can combine these three commands
+boxplot(shousing$price ~ levels(shousing$city)[as.numeric(shousing$city)],las = 2)
+
+p.107
+library(RColorBrewer)
+colors=brewer.pal(4,"BuPu")
+pal=colorRampPalette(colors)
+pal(5)
+data(volcano);image(volcano, col = pal(30))
+display.brewer.all()
+
+#google: hex color
+#Example 1
+plot(1:10,col="#0E44E8",pch=19,cex=0.5)
+#Example 2
+d1 <- density(rnorm(100));d2 <- density(rnorm(100))
+plot(range(d1$x, d2$x), range(d1$y, d2$y), type = "n", xlab = "x",ylab = "Density")
+lines(d1, col = "#D10FCE");lines(d2, col = "#EBD917")
+
+=====================
+Fri (6/28)
+
+functionName=function(inputs including default settings)
+{
+   function commands
+}
+
+
+start p.113
+
+The federal government makes data available
+Websites:
+data.gov
+research.data.gov
+
+p.123
+p.128
+
+mydata=read.table("C:/Users/JiunHua/Documents/CO2Na9ons.txt",header=TRUE,sep="\t")
+
+
+
+Mon 7/1 
+lecture 5
+
+p.22
+attach()
+detach(rain)
+p.26
+
+
+Tue 7/2
+
+p.26
+p.28
+p.31
+
+apply
+
+
+Wed 7/3
+
+Quiz
+7/9, 7/23, 8/6
+Midterm 7/12
+extra OH 7/11
+
+apply: apply a function to rows or columns of a matrix (also higher dimension)
+lapply: apply a function to each element of a list (returns a list)
+sapply: apply a function to each element of a list (returns a vector)
+mapply: apply a function to each element of a diverse set of data structure (returns vector)
+tapply: apply a function to subsets of a vector, by factor that defines the subset
+by: wraps tapply for a data frame
+
+p.40
+
+p.50
+l.sum=function(x){sum(x>0)/length(x)}
+sapply(rain,l.sum)
+
+p.52
+apply: 1=rows
+       2=colums
+       
+lecture note 6
+p.11
+
+
+function(x,...)
+{ # description, overall purpose
+  # inputs
+  # outputs
+  # other related functions
+  start your code 
+}
+
+
+7/5 Fri
+
+p.10
+p.20
+
+convert=function(m)
+{  # descripton of purpose
+   # input  (size,class,...)
+   # output
+   .
+   .
+   .
+}
+
+p.23
+p.24
+p.26
+p.29
+
+Mon 7/8
+
+start p.32
+
+Tue 7/9
+lecture note 7
+start p.4
+end p.31
+
+Wed 7/10
+Simulation: tool to understand distributions
+start:p.27
+
+p.33
+phase transition
+The first thing to do simulation:
+how tight is the analogy you make?
+end p.47
+
+
+Thu 7/11
+lecture 8
+
+behavior of median 
+when (a) sample size changes
+     (b) sigma^2 changes
+
+H1: as sample size increases, variability of median estimates to fall
+H2: as sigma^2 increases, median estimates vary more
+
+p.9
+p.10
+sample size=>B (very weird)
+
+
+       sex
+sport 
+
+
+7/15 Mon
+lecture 9
+
+7/16
+
+start p.24
+
+p.41
+p.49
+
+7/17 Wed
+Q2
+dim(housing)
+[1] 1414 6
+names(housing)
+[1] "city" "zip"... 
+length(housing)
+[1] 6
+class(housing$city)
+character
+sapply(housing[,-1:2],mean)
+775606,...
+
+Q3
+names(x)=letters(1:length(x))
+
+x>c(6,10)
+FALSE FALSE TRUE TRUE.... TRUE
+x["a","c","d"]=2
+a b c d e ...h
+2 4 2 2 .....28
+x[x>8]=NA
+a b c d e ...h
+2 4 2 2 NA...NA
+x[5:6]=5
+a b c d e f g h
+2 4 2 2 5 5 NA NA
+x[!is.na(x)]=3
+a b c d e f g h
+3 3 3 3 3 3 NA NA
+
+Q4
+a)
+counties in Wasington State
+b)
+death rate: number of deaths per 100,000
+c)
+death by suide? alchol related death
+hypothesis: not correlated
+plot the relationship:  scatter plot (suicide:y axis, alchol:x axis)
+d)
+changes to plot:
+to show drug about counties
+        death
+(1) delete "junk"
+(2) order counties by drug death rate
+(drug death rate by county, decreasing)
+
+Q5
+minmax=function(x,na.rm=FALSE){
+   # purpose
+   # inputs: numeric vecor may be empty
+   # outputs: return a vector
+   if (na.rm=TRUE){
+      x=x[!is.na(x)]
+   }
+   if (any(is.na(x))){
+      print ("missing value")
+      # warning ("missing value")
+      return (c(NA,NA))
+   } else if (length(x)==0){
+      print("cannot have empty vector")
+      return (c(NA,NA))
+   } else{
+      orderindex=order(x)
+      min.pos=orerindex[1]
+      max.pos=orderindex[length(x)]
+      retrun(c(min.pos,max.pos))
+   }
+}
+
+
+7/18 Thu
+start p.44
+
+grep : from unix
+       new in R
+
+regexpr(pattern,input)
+                 text
+gre
+
+p.49
+
+.
+.*
+
+
+\ in regular expression matching \ removes the meta character attribute
+\? is inerpreted as ? not meta char
+
+p.55
+lecture 10
+
+
+7/19
+
+different OS: unix, mac OS windows => use different hidden characters in file
+
+p.12
+p:paragraph
+a:anchor
+
+p.15
+<table>
+<tr>
+<td>  use tr and td to seperate colums and rows
+<th>  for headings
+<>: tags 
+</ >
+go through row by row
+
+p.23
+cellpadding border: additional information
+
+p.24
+p.28
+
+p.32
+<table width="2">
+ here width is called attributes
+
+p.37
+css
+
+Mon 7/22
+discuss lecture 9 p.53
+lecture 10 
+
+slash 
+double slash
+
+Tue
+lecture note 10
+p7
+seperate meta character=> use doubl slash
+
+p10
+p18
+
+
+Wed 7/24
+hw 5 
+Package Snowball     
++install dependence
+Package rjava
+
+===> library(snowball)
+SnowballStemmer()
+(use wordStem() to stem the words)
+
+Skip the last question
+
+
+XML
+lecture note 10
+p.27
+p.28
+attributes=> eg: change color
+
+p33
+p49
+
+Thr 7/25
+Term Frequency
+(race,A):1/5
+(race,D):2/7
+
+document frequencey
+storm:1/4
+race:3/4
+
+simirity matrix: square matrix, diagonal elements=0
+
+
+p.18
+
+
+Fir 7/26
+lecture note 13
+
+p.14
+p.22
+
+Mon 7/29
+
+lecture note 13
+start p.32
+
+UNIX
+www.ee.surrey.ac.uk/Teaching/Unix/unixintro.html
+
+$: prompt
+$rm myfile
+$alias rm r
+$r myfile
+$/r
+$history
+
+shell types
+csh  "c-shell"
+tcsh "t-shell"
+
+$cd\
+$ls
+$cd home
+$cd /home
+
+Mac 
+-->application -->utilities -->terminal.app
+
+Midori:~ victoria
+
+Midori    machine name
+~         current directory
+victoria  name
+
+$cd ~
+
+$ ls
+$ pwd
+/Users/victoria
+$ cd /home
+
+
+$ cd
+$ cd Desktop/
+$ cd
+$ ls -l                  <== minus l 
+$ cd Adobe/
+$ pwd
+$ cd..
+
+ls: list the directory ???
+     or last directory ???
+
+
+drwxr-xr-x
+
+r0x 
+
+drwx : directory read write execute (rwx)
+owner, people in this group, everybody 
+
+
+
+Tue 7/30
+Intro to Unix history 
+(BSD:berkelely)
+
+download putty.exe
+SSH (secure shell connection) <==make sure you always do that
+scf-ug01.berkeley.edu
+scf-ug11.berkeley.edu
+username@scf-ug01.berkeley.edu
+
+stat account ??
+stat133
+
+ssh vcs@scf-ug01.berkele.edu
+
+ls -a 
+(l:long a:all)
+
+shells: csh, 
+        tcsh, 
+        bash: bouwne again shell
+        ksh
+
+more .bashrc
+less         <==always use lee to look at file, 
+
+
+ls -la
+
+less .login
+less .logout
+
+cd ..
+cd .
+
+
+owner 
+people in this group
+everybody 
+
+$rmdir unixstuff/
+
+rm -r unixstuff
+
+
+Wed 7/31
+scf-ug01.berkeley.edu
+scf-ug11.berkeley.edu
+use stat account/password
+ssh username@scf
+
+Windows: use putty.exe to log onto server
+Mac: use terminal window to ssh to server
+
+
+ssh vcs@scf-ug.01.berkeleyedu
+
+
+$ R
+less .Rhistory
+/accounts/gen/vis/vcs
+
+less .Rdata
+
+unix editors: pico (emacs vi)
+$ pico newfile.txt
+
+$ ls -la unixstuff/backpus/
+
+$ ls ./
+
+$ touch newfile.txt
+$ cp newfile.txt oldfile.txt
+$ mv newfile.txt unixstuff/
+$ mv newfile.txt newfile.bak
+$ clear 
+
+$ cat newfile.txt
+$ head newfile.txt
+$ tail newfile.txt
+
+Mac:X11
+ssh vcs@scf-ug01.berkeley.edu
+
+trouble@stat.berkeley.edu
+
+
+Thr 8/1
+
+To enable X display:
+Windows:
+1. run Xming
+2. enable X11 in patty
+3. connect to unix machine as usual
+Mac: 
+1. run X11
+2. connect as usual except: 
+   $ ssh -X username@machine name
+
+touch science.txt
+pico science.txt
+this is a file with science in it
+this line doesnt have it
+grep science science.txt
+grep -i Science science.txt
+grep -v science science.txt
+man grep
+/-v
+q
+man ls
+apropos ls
+man wc
+
+cat science.txt > newscience.txt
+diff science.txt newscience.txt
+diff science.txt oldfile.txt
+cat list1
+less list1
+
+>   "funnel"
+
+sort < biglist > sortedbiglist
+who > names.txt
+sort < names.txt
+who | sort
+who | wc -l
+
+
+Fri 8/2
+
+redirect "standard output"  <  >
+pipe   |
+chain multiple comments together
+
+lecture 4.1
+
+Windos  --|
+          |--------- unix service
+Mac     --|   
+
+Mac:
+localprompt$ cd to directory where file is
+localprompt$ scp filename usenamee@machinename:~/unixstuff
+                   from    to
+(scp: secured copy)
+localprompt$ scp userhome@machinename:~/unixstuff/newfile.txt .
+                                                              (current direct directory)
+
+Windows:
+install winftp
+use winftp dialog box
+
+(username@scf-ug01.berkeley.edu)
+
+
+lecture 5
+
+changing permissions: 
+chmod a+rw filename
+      |
+      | 
+      whsoe permision are changing
+
+chmod a-rw filename
+chmod u+rwx
+      o
+      g
+
+
+rwxrwxrwx
+---
+user(u)
+   ---
+   group(g)
+      ---
+      other(o)
+---------
+all(a)
+ 
+
+top
+cpu time (not real time)
+man top
+top -user vcs
+matlab &
+
+kill -9 10400
+job
+kill -9 10132
+kill -9 10145
+
+xterm &
+matlab &
+fg %1
+matlab
+
+hi
+quit
+
+jobs
+
+8/5 Mon
+goal: shell scripting
+      sed
+      awk
+
+start: lecture 6
+
+ssh -x vcs@scf-ug01.berkeley.edu
+
+quota -v
+du -ks *
+df -k
+
+gzip
+gunzip
+diff
+find list*
+find list?
+find .
+
+find . | grep list
+find . | grep list?
+find . | grep list | grep 1
+find . | grep unixstuff
+find . | grep list | grep -v 2
+find . | grep list | grep -v 1
+set history=100
+
+lecture 7 (skip?)
+lecture 8
+8.2
+echo $OSTYPE   ($:calling some value of some variable)
+echo OSTYPE
+echo $USER
+echo $DISPLAY
+echo $PATH
+(usu. put executable files in a directory called "bin")
+
+printenv | less
+setenv
+
+8.5
+
+set| less
+
+
+global variable(environmental variable)
+
+csh
+tcsh
+ksh
+exit
+echo $SHELL
+
+MYVAR1="2"
+echo $MYVAR1
+first_name="Franky"
+echo $first_name
+echo $MYVAR1 $first_name
+
+section 3.2.3 (skip)
+section 3.2.4 reserved variable (skip)
+
+cd bin
+pico firstscript
+#1/bin/bash (always start this line)
+
+numbersign means assignment(?)
+
+chmod 777 firstscritpt
+./firstscript 1 2 3 
+
+
+8/6 Tue
+
+4 pillars of unix: scripting, grep, awt, sed
+
+
+* shell script  in unix is a file, like R script.
+* by convention, scripts are stored in bin/
+  -- (recall $PATH lists the directories where unix looks for scripts)
+  -- $ cd
+  -- $ mkdir bin
+* by convention, scripts end in .sh, script.sh
+* script files must have executable permissions
+* $./filename.sh
+
+content:
+* all scripts start with #!/bin/bash
+                         #!/bin/sh
+* otherwise # comments
+
+$ ls -1 | grep 
+
+pico secondscript.sh
+   #1/bin/sh
+   msg1=Hello
+   msg2=There!
+   echo $msg1 $msg2
+
+$less secondscript.sh
+
+permissions
+
+$chmod o+x      fielname
+       g+x w r
+       u+
+$chmod _ _ _ 
+$chmod 777 secondscript.sh
+$chmod 700 
+$chmod 755 
+
+./secondscript.sh
+./thirdsript.sh
+
+
+if... then...
+
+./secondscript.sh 1 
+
+./four.sh 1
+
+
+
+
+8/7 Wed
+scf-ug01.berkeley.edu
+
+Today: 
+* running R in batch mode
+* wrapping up shell scripting
+* sed
+* auk
+
+why run R in unix
+1. huge amount of data 
+2. faster machine (unix OS)
+
+xterm
+xterm & (ruunign in backgroud)
+mkdir Rbatch 
+
+Recall: 
+
+d=("test.txt",sep="\t",)
+
+R CMD BATCH input.R &  
+
+less R.out
+
+cd /accounts/gen/vis/vcs/Rbatch/ 
+
+
+scp test.jpg vcs@corn.stanford.edu:~/
+
+
+
+remote system
+
+R CMD BATCH script.$ &
+            (input.R)  
+   
+test.txt needs not to be executable (becasue it is R, not unix, that calls it ) ???
+
+scp vcs@scf-ug01.berkeley.edu:~/Rbatch/test.jpg .
+
+
+$cp /accounts/gen/vis/vcs/Rbatch/input.R .
+$cp /accounts/gen/vis/vcs/Rbatch/input.R ~/myRbatch/  
+
+www.grymoire.com/Unix/Sed.html
+
+cat input.Rout }grep Error
+
+stream editor
+
+
+sed(substiutioin)
+
+sed s/Error/error/
+(s: substitution, Error: replace,  error: replace with)
+
+
+pico testsed.txt 
+xy
+1 1
+day 2
+3 3 
+4 night
+
+sed s/day/night/ testsed.txt
+
+sed s/day/night/ <testsed.txt > testsed2.txt
+
+
+8/8 Thu
+Review Session Monday Aug 12
+agenda: 
+* Sed: stream editor
+* Awk
+
+[the essential command:s for substitution]
+
+$ sed s/from/to/ file
+$ sed s/from/to/ file>newfile (no need to add ">newfile")
+$ sed s/from/to/ <file >newfile
+
+echo day | sed s/day/night/ 
+echo Sunday | sed s/day/night/ 
+echo Sunday | sed 's/day/night/'
+
+pico file
+   one two three, one two three
+   four three two one
+   one hundred
+sed 's/one/ONE/' <file
+
+[the slash as delimiter]
+
+sed 's/\/usr\/local\/bin/\/common\/bin/' <old >new
+
+s/ "\/usr\/local\/bin"  /  "\/common\/bin"  / 
+  
+
+[Using & as the matched string]
+
+http://www.panix.com/~elflord/unix/sed.html
+[Sed regular expressions]
+
+[How it Workds: A Brief Introduction]
+s/regular-expression/replacement text/{flags}
+
+$ sed s/from/to/g file   (g: global)
+pico file
+   I have three dogs and two cats
+sed -e 's/dog/cat/g' -e 's/cat/elephant/g' file   
+
+[The Substitute Command]
+n
+g
+p
+(STDOUT= standard output, STDIN, STDERR)
+
+[The Delete Command]
+Example 4
+cat file
+   line 1 (one)
+   line 2 (two)
+   line 3 (three)
+sed -e '1,2d' file   (d:delete)
+
+"sed is linewise"!!!
+
+Example 4d
+
+"awk is columnwise"!!!
+
+awk!!!
+in awk:
+$1 refers to 1st column
+$2 refers ot 2nd column
+...
+
+[Input seperator]
+[Arithmetic]
+[Variables]
+
+
